@@ -20,15 +20,15 @@ while True:
     contours, _ = cv2.findContours(frame_binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     
     for points in contours:
-        if cv2.contourArea(points) < 1000:
+        if cv2.contourArea(points) < 1500:
             continue
         
         approx = cv2.approxPolyDP(points, cv2.arcLength(points, True) * 0.02, True)
         
-        if len(approx) != 4:
+        if not cv2.isContourConvex(approx) or len(approx) != 4:
             continue
         
-        cv2.polylines(frame, points, True, (0, 0, 255), thickness = 3)
+        cv2.polylines(frame, [approx], True, (0, 0, 255), thickness = 3)
         
     cv2.imshow('VideoFrame', frame)
     
@@ -37,7 +37,3 @@ while True:
     
 capture.release()
 cv2.destroyAllWindows()
-
-
-        
-    
