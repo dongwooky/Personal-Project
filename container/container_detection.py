@@ -50,11 +50,11 @@ while True:
         if not cv2.isContourConvex(approx) or len(approx) != 4:
             continue
         
-        cv2.polylines(frame, [approx], True, (0, 0, 255), thickness = 3)
+        cv2.polylines(frame, [approx], True, (0, 0, 255), thickness = 3) #컨테이너 표시
         
-        container_center = findCenter(approx)
+        container_center = findCenter(approx) #컨테이너 중심점 체크
         
-        print(container_center)
+        print(container_center) #컨테이너 위치 확인
         
     cv2.imshow('VideoFrame', frame)
     
