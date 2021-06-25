@@ -11,7 +11,7 @@ def findCenter(approx):
     
     return points_center
 
-capture = cv2.VideoCapture(0) #카메라 열기
+capture = cv2.VideoCapture(1) #카메라 열기
 
 if not capture.isOpened():
     print('Camera open failed!')
@@ -32,7 +32,7 @@ capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 #프레임 단위 작업
 while True:
     ret, frame = capture.read() #프레임 읽기
-    
+    gg
     if not ret:
         print('Frame read error!')
         sys.exit()
