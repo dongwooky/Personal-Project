@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import sys
 
-#컨테이너 중심점 찾기 함수
+#컨테이너 중심점 찾기 함
 def findCenter(approx):
     points = np.squeeze(approx)  # (4, 1, 2) ==> (4, 2)
     center_x = round(np.mean(points[:, 0])) #컨테이너 중심점 찾기 x좌표
@@ -32,7 +32,7 @@ capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 #프레임 단위 작업
 while True:
     ret, frame = capture.read() #프레임 읽기
-    gg
+
     if not ret:
         print('Frame read error!')
         sys.exit()
