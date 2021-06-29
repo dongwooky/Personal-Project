@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import sys
 
-#컨테이너 중심점 찾기 함
+#컨테이너 중심점 찾기 
 def findCenter(approx):
     points = np.squeeze(approx)  # (4, 1, 2) ==> (4, 2)
     center_x = round(np.mean(points[:, 0])) #컨테이너 중심점 찾기 x좌표
