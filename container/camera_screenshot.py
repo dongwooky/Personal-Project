@@ -1,42 +1,56 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jun 30 23:47:23 2021
+Created on Thu Jul  1 10:10:45 2021
 
 @author: 82106
 """
 
-import os
 import cv2
+import os
+import sys
 
-if not os.path.exists('result') :
+if not os.path.exists('result'):
     os.makedirs('result')
 
-cap = cv2.VideoCapture(1)
+capture = cv2.VideoCapture(1)
 
-width = int(cap.get(3)) # 가로 길이 가져오기 
-height = int(cap.get(4)) # 세로 길이 가져오기
-fps = 30
-cnt = 1
+if not capture.isOpened():
+    print('Camera open failed!')
+    sys.exit()
 
-fcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
-out = cv2.VideoWriter('result/webcam.avi', fcc, fps, (width, height))
+'''
+frameWidth = int(capture.get(cv2.CAP_PROP_FRAME_WIDTH))
+frameHeight = int(capture.get(cv2.CAP_PROP_FRMAE_HEIGHT))
+frameSize = (frameWidth, frameHeight)
+print('frame size : {}'.format(frameSize))
+'''
 
-while (True) :
-    k = cv2.waitKey(1) & 0xFF
-    ret, frame = cap.read()
-    if ret :
-        out.write(frame)
-        cv2.imshow('frame', frame)
+capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+
+count = 1
+
+while True:
+    ret, frame = capture.read()
+    
+    if not ret:
+        print('Frame read error!')
+        sys.exit()
         
-        if k == ord('s') :
-            print("Screenshot saved...")
-            cv2.imwrite('result/screenshot{}.png'.format(cnt), frame, params=[cv2.IMWRITE_PNG_COMPRESSION,0])
-            cnt += 1
-        elif k == ord('q') : break
-    else :
-        print("Fail to read frame!")
+    cv2.imshow('frame', frame)
+    
+    key = cv2.waitKey(1)
+    if key == ord('s'):
+        print('Screenshot saved!')
+        cv2.imwrite('result/screenshot{}.png'.format(count), frame, params=[cv2.IMWRITE_PNG_COMPRESSION, 0])
+        count += 1
+        
+    elif key == ord('q'):
         break
-
-cap.release()
-out.release()
+    
+capture.release()
 cv2.destroyAllWindows()
+    
+        
+    
+    
